@@ -8,7 +8,7 @@ body {
 .container {
   width: 80%;
   max-width: 400px;
-  margin: 50px auto;
+  margin: 50px auto; /* Centrar verticalmente y horizontalmente */
   background-color: #fff;
   border-radius: 8px;
   padding: 20px;
@@ -28,10 +28,6 @@ label {
   display: block;
   margin-bottom: 5px;
   color: #666;
-}
-
-.input-group {
-  margin-bottom: 20px;
 }
 
 input[type="text"],
@@ -65,9 +61,4 @@ input[type="email"] {
   padding: 10px;
   border-radius: 4px;
   text-align: center;
-}
-
-.error {
-  background-color: #ffcccc;
-  color: #cc0000;
 }
