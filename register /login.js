@@ -1,38 +1,27 @@
-/*document.getElementById('loginForm').addEventListener('submit', function(event) {
+document.getElementById('loginForm').addEventListener('submit', function(event) {
     event.preventDefault();
     var email = document.getElementById('email').value;
-    var password = document.getElementById('password').value;
+    document.getElementById('responseMessage').innerText = 'Consultando base de datos...';
 
-    // Construir el objeto de datos a enviar
-    var data = {
-        email: email,
-        password: password
-    };
-
-    // Crear una nueva instancia de XMLHttpRequest
+    // Hacer una solicitud AJAX al servidor
     var xhr = new XMLHttpRequest();
-
-    // Configurar la solicitud
-    xhr.open('POST', 'http://localhost:8000/login', true);
+    xhr.open('POST', 'http://localhost:8000', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
-
-    // Manejar el evento de carga
-    xhr.onload = function() {
-        if (xhr.status >= 200 && xhr.status < 300) {
-            // La solicitud fue exitosa
-            var responseData = JSON.parse(xhr.responseText);
-            console.log(responseData);
-        } else {
-            // La solicitud falló
-            console.error('Error:', xhr.statusText);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var response = xhr.responseText;
+                if (response === "El correo ya existe") {
+                    document.getElementById('responseMessage').innerText = 'Login Exitoso';
+                } else if (response === "Usuario creado correctamente") {
+                    document.getElementById('responseMessage').innerText = 'Usuario no existe! Registrese';
+                } else {
+                    document.getElementById('responseMessage').innerText = 'Error en la solicitud al servidor';
+                }
+            } else {
+                document.getElementById('responseMessage').innerText = 'Error en la solicitud al servidor';
+            }
         }
     };
-
-    // Manejar el evento de error
-    xhr.onerror = function() {
-        console.error('Error de red');
-    };
-
-    // Enviar la solicitud con los datos
-    xhr.send(JSON.stringify(data));
+    xhr.send(JSON.stringify({ name: "", email: email }));
 });
